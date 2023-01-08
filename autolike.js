@@ -1,5 +1,9 @@
-const hourlyLimit = 5;
-const dailyLimit = 10;
+// Before you change the limit values, please read the following article:
+//    https://taplink.at/en/blog/instagram-follow-unfollow-and-likes-limits.html
+const hourlyLikeLimit = 60;
+const dailyLikeLimit = 700;
+const minTimeForNextPage = 5000;
+const maxTimeForNextPage = 15000;
 
 const modelRightPanel = " ._ae65 ";
 const modalButtons = " button._abl- ";
@@ -9,8 +13,8 @@ const arrowModal = " ._aeap ";
 const rightButtonClass = " ._aaqg button ";
 
 function getRandomWait() {
-    let pMin = 1000;
-    let pMax = 7000;
+    let pMin = minTimeForNextPage;
+    let pMax = maxTimeForNextPage;
 
     pMin = Math.round(pMin);
     pMax = Math.round(pMax);
@@ -92,13 +96,13 @@ function addLikeCount(isTypeDay) {
 
 function getLikeCount(isTypeDay) {
     const date = getDate(isTypeDay);
-    const currentValue = getLocalstorage(date);
+
     return  parseInt(getLocalstorage(date), 10);
 }
 
 function isLimitReached(isTypeDay)
 {
-    const limit = isTypeDay ? dailyLimit : hourlyLimit;
+    const limit = isTypeDay ? dailyLikeLimit : hourlyLikeLimit;
     const currentCount = getLikeCount(isTypeDay);
 
     return currentCount > limit;
